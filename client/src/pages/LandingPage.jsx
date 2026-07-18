@@ -14,7 +14,7 @@ export default function LandingPage() {
     if (sessionStr) {
       try {
         const session = JSON.parse(sessionStr);
-        if (session.username && session.expires > Date.now()) {
+        if (session.username && (session.expires === "infinite" || session.expires > Date.now())) {
           navigate(`/dashboard/${session.username}`);
         } else {
           localStorage.removeItem("lc_revisited_session");
@@ -35,7 +35,7 @@ export default function LandingPage() {
     try {
       await registerUser(username.trim());
       
-      const expires = Date.now() + 30 * 24 * 60 * 60 * 1000;
+      const expires = "infinite";
       localStorage.setItem("lc_revisited_session", JSON.stringify({
         username: username.trim().toLowerCase(),
         expires

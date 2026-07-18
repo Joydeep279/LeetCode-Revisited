@@ -837,8 +837,8 @@ The server runs a background cron job that automatically syncs all registered us
 **Q: Do I need a LeetCode account to use this?**
 A: You need a LeetCode account with a public profile, but you don't need to log in to this app. Just enter your username.
 
-**Q: How many problems does it fetch?**
-A: The app fetches the **20 most recent accepted submissions** on each sync. Over time, with auto-sync running every 6 hours, it will accumulate all your recently solved problems.
+**Q: How many problems can the app track? Is there a limit?**
+A: There is **no strict limit** on the total number of problems the app can track. On each sync, it fetches your **20 most recent accepted submissions** from LeetCode. Over time, with auto-sync running every 6 hours, it dynamically accumulates all your newly solved problems in the database and tracks them indefinitely.
 
 **Q: Can I track problems from both LeetCode and LeetCode CN?**
 A: Currently, only the main LeetCode site (leetcode.com) is supported through the alfa-leetcode-api proxy.
