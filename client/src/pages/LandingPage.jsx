@@ -4,7 +4,7 @@ import { Brain, ArrowRight, Zap, Target, TrendingUp, Sparkles } from "lucide-rea
 import { registerUser } from "../api/api";
 
 export default function LandingPage() {
-  const [username, setUsername] = useState("");
+  const [username, setUsername] = useState("Joydeep279");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const navigate = useNavigate();
