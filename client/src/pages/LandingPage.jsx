@@ -27,21 +27,29 @@ export default function LandingPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!username.trim()) return;
+    let finalUsername = username.trim();
+    if (!finalUsername) return;
+
+    // Extract username if a full LeetCode URL was pasted
+    const match = finalUsername.match(/(?:leetcode\.com\/(?:u\/)?)([^\/\?]+)/i);
+    if (match) {
+      finalUsername = match[1];
+      setUsername(finalUsername);
+    }
 
     setLoading(true);
     setError("");
 
     try {
-      await registerUser(username.trim());
+      await registerUser(finalUsername);
       
       const expires = "infinite";
       localStorage.setItem("lc_revisited_session", JSON.stringify({
-        username: username.trim().toLowerCase(),
+        username: finalUsername.toLowerCase(),
         expires
       }));
 
-      navigate(`/dashboard/${username.trim().toLowerCase()}`);
+      navigate(`/dashboard/${finalUsername.toLowerCase()}`);
     } catch (err) {
       const msg =
         err.response?.data?.error || "Something went wrong. Please try again.";
