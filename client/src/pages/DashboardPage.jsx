@@ -43,6 +43,22 @@ export default function DashboardPage() {
   }, [fetchData]);
 
   const handleComplete = async (problemId) => {
+    // Demo mode handler
+    if (problemId.toString().startsWith("mock")) {
+      setCompleting(problemId);
+      setTimeout(() => {
+        showToast("Problem reviewed successfully! (Demo Mode)");
+        setProblems((prev) => prev.filter((p) => p._id !== problemId));
+        setStats((prev) => ({
+          ...prev,
+          dueToday: Math.max(0, prev.dueToday - 1),
+          totalReviewsMade: prev.totalReviewsMade + 1,
+        }));
+        setCompleting(null);
+      }, 600);
+      return;
+    }
+
     setCompleting(problemId);
     try {
       const result = await markProblemComplete(problemId);
@@ -56,6 +72,49 @@ export default function DashboardPage() {
     } finally {
       setCompleting(null);
     }
+  };
+
+  const loadMockData = () => {
+    setProblems([
+      {
+        _id: "mock1",
+        title: "Two Sum",
+        difficulty: "Easy",
+        nextReviewDate: new Date().toISOString(),
+        currentInterval: 0,
+        topicTags: ["Array", "Hash Table"],
+        leetcodeUrl: "https://leetcode.com/problems/two-sum/",
+      },
+      {
+        _id: "mock2",
+        title: "LRU Cache",
+        difficulty: "Medium",
+        nextReviewDate: new Date(Date.now() - 86400000).toISOString(),
+        currentInterval: 2,
+        topicTags: ["Hash Table", "Linked List", "Design"],
+        leetcodeUrl: "https://leetcode.com/problems/lru-cache/",
+      },
+      {
+        _id: "mock3",
+        title: "Merge k Sorted Lists",
+        difficulty: "Hard",
+        nextReviewDate: new Date(Date.now() - 172800000).toISOString(),
+        currentInterval: 3,
+        topicTags: ["Linked List", "Divide and Conquer", "Heap (Priority Queue)", "Merge Sort"],
+        leetcodeUrl: "https://leetcode.com/problems/merge-k-sorted-lists/",
+      }
+    ]);
+    
+    setStats({
+      totalProblems: 15,
+      dueToday: 3,
+      totalReviewsMade: 42,
+      upcoming: 5,
+      streak: 7,
+      difficulties: { Easy: 5, Medium: 8, Hard: 2 },
+      lastSyncedAt: new Date().toISOString(),
+    });
+    showToast("Loaded Demo Data!");
   };
 
   const handleSync = async () => {
@@ -166,11 +225,18 @@ export default function DashboardPage() {
                   <Inbox className="w-10 h-10 text-lc-green-400" />
                 </div>
                 <h3 className="text-xl font-semibold text-gray-100 mb-2">All Clear! 🎉</h3>
-                <p className="text-gray-400 max-w-sm mx-auto">
+                <p className="text-gray-400 max-w-sm mx-auto mb-6">
                   No problems due for review right now. Keep solving new problems on LeetCode,
                   and they'll appear here when it's time to revise.
                 </p>
+                <button 
+                  onClick={loadMockData}
+                  className="px-6 py-2 bg-lc-dark-600 hover:bg-lc-dark-500 text-gray-200 rounded-lg text-sm font-medium transition-colors border border-lc-dark-400"
+                >
+                  Load Demo Data
+                </button>
               </div>
+
             )}
           </div>
 
