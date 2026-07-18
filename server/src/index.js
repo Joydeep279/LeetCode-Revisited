@@ -11,10 +11,20 @@ const PORT = process.env.PORT || 5000;
 
 // Middleware
 const allowedOrigins = process.env.ALLOWED_ORIGINS
-  ? process.env.ALLOWED_ORIGINS.split(",")
+  ? process.env.ALLOWED_ORIGINS.split(",").map((o) => o.trim())
   : ["http://localhost:5173"];
 
-app.use(cors({ origin: allowedOrigins }));
+app.use(
+  cors({
+    origin: allowedOrigins,
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  })
+);
+
+// Explicitly handle preflight OPTIONS for all routes
+app.options("*", cors({ origin: allowedOrigins }));
+
 app.use(express.json());
 
 // Routes
