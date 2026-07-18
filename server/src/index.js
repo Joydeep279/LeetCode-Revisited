@@ -7,7 +7,6 @@ import problemRoutes from "./routes/problemRoutes.js";
 import { startSyncCron } from "./cron/syncJob.js";
 
 const app = express();
-const PORT = process.env.PORT || 5000;
 
 // Middleware
 const allowedOrigins = process.env.ALLOWED_ORIGINS
@@ -44,23 +43,28 @@ app.get("/api/health", (req, res) => {
   res.json({ status: "ok", timestamp: new Date().toISOString() });
 });
 
-// Start server
-async function start() {
-  try {
-    await connectDB();
+// Connect to DB on cold start (for Vercel serverless)
+connectDB().then(() => {
+  startSyncCron();
+}).catch((err) => {
+  console.error("❌ Failed to connect to DB:", err.message);
+});
 
-    // Start cron job for periodic syncing
+// Start server only when running locally (not on Vercel)
+if (process.env.VERCEL !== "1") {
+  const PORT = process.env.PORT || 5000;
+  connectDB().then(() => {
     startSyncCron();
-
     app.listen(PORT, () => {
       console.log(`\n🚀 Server running on http://localhost:${PORT}`);
       console.log(`📡 API: http://localhost:${PORT}/api`);
       console.log(`💓 Health: http://localhost:${PORT}/api/health\n`);
     });
-  } catch (error) {
+  }).catch((error) => {
     console.error("❌ Failed to start server:", error.message);
     process.exit(1);
-  }
+  });
 }
 
-start();
+// Export for Vercel serverless
+export default app;

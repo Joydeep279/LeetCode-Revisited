@@ -17,6 +17,10 @@
         "Access-Control-Allow-Headers": "Content-Type, Authorization",
         "Access-Control-Allow-Credentials": "false"
       }
+    },
+    {
+      "src": "/(.*)",
+      "dest": "src/index.js"
     }
   ]
 }
