@@ -1,0 +1,113 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    @apply bg-lc-dark-900 text-gray-100 font-sans antialiased;
+    min-height: 100vh;
+  }
+
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-lc-dark-800;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-lc-dark-500 rounded-full;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-lc-purple-500;
+  }
+}
+
+@layer components {
+  .glass-card {
+    @apply bg-lc-dark-700/60 backdrop-blur-md border border-white/5 rounded-2xl shadow-lg;
+  }
+
+  .glass-card-hover {
+    @apply glass-card transition-all duration-300 hover:border-lc-purple-500/30 hover:shadow-lc-purple-500/10 hover:shadow-xl hover:-translate-y-0.5;
+  }
+
+  .gradient-border {
+    position: relative;
+  }
+
+  .gradient-border::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    padding: 1px;
+    border-radius: inherit;
+    background: linear-gradient(135deg, rgba(139, 92, 246, 0.4), rgba(91, 138, 240, 0.2), rgba(44, 187, 93, 0.3));
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+
+  .btn-primary {
+    @apply px-6 py-3 bg-gradient-to-r from-lc-purple-500 to-lc-blue-500 text-white font-semibold rounded-xl
+    transition-all duration-300 hover:shadow-lg hover:shadow-lc-purple-500/25 hover:-translate-y-0.5
+    active:translate-y-0 active:shadow-md;
+  }
+
+  .btn-success {
+    @apply px-4 py-2 bg-gradient-to-r from-lc-green-500 to-lc-green-400 text-white font-semibold rounded-xl
+    transition-all duration-300 hover:shadow-lg hover:shadow-lc-green-500/25 hover:-translate-y-0.5
+    active:translate-y-0 active:shadow-md;
+  }
+
+  .btn-outline {
+    @apply px-4 py-2 border border-lc-purple-500/40 text-lc-purple-400 font-medium rounded-xl
+    transition-all duration-300 hover:bg-lc-purple-500/10 hover:border-lc-purple-500/60;
+  }
+
+  .difficulty-easy {
+    @apply text-lc-green-400 bg-lc-green-400/10 border border-lc-green-400/20;
+  }
+
+  .difficulty-medium {
+    @apply text-lc-yellow-400 bg-lc-yellow-400/10 border border-lc-yellow-400/20;
+  }
+
+  .difficulty-hard {
+    @apply text-lc-red-400 bg-lc-red-400/10 border border-lc-red-400/20;
+  }
+
+  .input-field {
+    @apply w-full px-5 py-3.5 bg-lc-dark-700/80 border border-white/10 rounded-xl text-gray-100
+    placeholder-gray-500 focus:outline-none focus:border-lc-purple-500/50 focus:ring-2 focus:ring-lc-purple-500/20
+    transition-all duration-300;
+  }
+
+  .tag-badge {
+    @apply px-2.5 py-0.5 text-xs font-medium rounded-full bg-lc-dark-500/80 text-gray-300 border border-white/5;
+  }
+}
+
+@layer utilities {
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-lc-purple-400 via-lc-blue-400 to-lc-green-400;
+  }
+
+  .mesh-gradient {
+    background:
+      radial-gradient(ellipse at 20% 50%, rgba(139, 92, 246, 0.08) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 20%, rgba(91, 138, 240, 0.06) 0%, transparent 50%),
+      radial-gradient(ellipse at 40% 80%, rgba(44, 187, 93, 0.04) 0%, transparent 50%);
+  }
+}
