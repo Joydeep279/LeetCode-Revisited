@@ -30,6 +30,32 @@ app.use(express.json());
 app.use("/api/users", userRoutes);
 app.use("/api/problems", problemRoutes);
 
+// Root Welcome Message
+app.get("/", (req, res) => {
+  res.send(`
+    <html>
+      <head>
+        <title>LeetCode Revisited Server</title>
+        <style>
+          body { font-family: system-ui, -apple-system, sans-serif; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; margin: 0; background-color: #0f172a; color: #f8fafc; }
+          h1 { color: #38bdf8; }
+          a { color: #a78bfa; text-decoration: none; }
+          a:hover { text-decoration: underline; }
+          .container { text-align: center; padding: 2rem; border-radius: 1rem; background-color: #1e293b; box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1); }
+        </style>
+      </head>
+      <body>
+        <div class="container">
+          <h1>🚀 LeetCode Revisited Server is Running!</h1>
+          <p>The backend API is healthy and responding to requests.</p>
+          <p>API Root: <a href="/api">/api</a></p>
+          <p>Health Check: <a href="/api/health">/api/health</a></p>
+        </div>
+      </body>
+    </html>
+  `);
+});
+
 // API root
 app.get("/api", (req, res) => {
   res.json({
