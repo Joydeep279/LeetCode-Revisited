@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Brain, ArrowRight, Zap, Target, TrendingUp, Sparkles } from "lucide-react";
 import { registerUser } from "../api/api";
@@ -9,6 +9,22 @@ export default function LandingPage() {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
+  useEffect(() => {
+    const sessionStr = localStorage.getItem("lc_revisited_session");
+    if (sessionStr) {
+      try {
+        const session = JSON.parse(sessionStr);
+        if (session.username && session.expires > Date.now()) {
+          navigate(`/dashboard/${session.username}`);
+        } else {
+          localStorage.removeItem("lc_revisited_session");
+        }
+      } catch (e) {
+        localStorage.removeItem("lc_revisited_session");
+      }
+    }
+  }, [navigate]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!username.trim()) return;
@@ -18,6 +34,13 @@ export default function LandingPage() {
 
     try {
       await registerUser(username.trim());
+      
+      const expires = Date.now() + 30 * 24 * 60 * 60 * 1000;
+      localStorage.setItem("lc_revisited_session", JSON.stringify({
+        username: username.trim().toLowerCase(),
+        expires
+      }));
+
       navigate(`/dashboard/${username.trim().toLowerCase()}`);
     } catch (err) {
       const msg =

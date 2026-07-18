@@ -1,13 +1,19 @@
-import { Link, useLocation } from "react-router-dom";
-import { Brain, BarChart3, RefreshCw } from "lucide-react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Brain, BarChart3, RefreshCw, LogOut } from "lucide-react";
 
 export default function Navbar({ username, onSync, syncing }) {
   const location = useLocation();
+  const navigate = useNavigate();
 
   const isActive = (path) =>
     location.pathname.includes(path)
       ? "text-lc-purple-400 border-b-2 border-lc-purple-400"
       : "text-gray-400 hover:text-gray-200 border-b-2 border-transparent";
+
+  const handleLogout = () => {
+    localStorage.removeItem("lc_revisited_session");
+    navigate("/");
+  };
 
   return (
     <nav className="sticky top-0 z-50 bg-lc-dark-900/80 backdrop-blur-xl border-b border-white/5">
@@ -54,9 +60,18 @@ export default function Navbar({ username, onSync, syncing }) {
               </button>
             )}
             {username && (
-              <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-lc-dark-700/60 border border-white/5">
-                <div className="w-2 h-2 rounded-full bg-lc-green-400 animate-pulse"></div>
-                <span className="text-sm text-gray-300 font-medium">{username}</span>
+              <div className="flex items-center gap-3">
+                <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-lc-dark-700/60 border border-white/5">
+                  <div className="w-2 h-2 rounded-full bg-lc-green-400 animate-pulse"></div>
+                  <span className="text-sm text-gray-300 font-medium">{username}</span>
+                </div>
+                <button
+                  onClick={handleLogout}
+                  className="p-1.5 text-gray-400 hover:text-lc-red-400 hover:bg-lc-red-400/10 rounded-lg transition-colors"
+                  title="Logout"
+                >
+                  <LogOut className="w-4 h-4" />
+                </button>
               </div>
             )}
           </div>
