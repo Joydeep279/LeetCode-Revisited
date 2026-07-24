@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Brain, ArrowRight, Zap, Target, TrendingUp } from "lucide-react";
 import { registerUser } from "../api/api";
+import Footer from "../components/Footer";
 
 export default function LandingPage() {
   const [username, setUsername] = useState("Joydeep279");
@@ -194,6 +195,8 @@ export default function LandingPage() {
           </div>
         </div>
       </div>
+
+      <Footer />
     </div>
   );
 }

@@ -6,6 +6,7 @@ import ProblemCard from "../components/ProblemCard";
 import StatsCard from "../components/StatsCard";
 import StreakTracker from "../components/StreakTracker";
 import LoadingSpinner from "../components/LoadingSpinner";
+import Footer from "../components/Footer";
 import { getDueProblems, markProblemComplete, getStats, syncProblems } from "../api/api";
 
 export default function DashboardPage() {
@@ -104,7 +105,7 @@ export default function DashboardPage() {
         leetcodeUrl: "https://leetcode.com/problems/merge-k-sorted-lists/",
       }
     ]);
-    
+
     setStats({
       totalProblems: 15,
       dueToday: 3,
@@ -140,25 +141,24 @@ export default function DashboardPage() {
   }
 
   return (
-    <div className="min-h-screen bg-drac-bg">
+    <div className="min-h-screen bg-drac-bg flex flex-col">
       <Navbar username={username} onSync={handleSync} syncing={syncing} />
 
       {/* Toast Notification */}
       {toast && (
         <div className="fixed top-16 right-4 z-50 animate-slide-up">
           <div
-            className={`drac-card px-4 py-2.5 text-sm font-medium shadow-lg ${
-              toast.type === "error"
+            className={`drac-card px-4 py-2.5 text-sm font-medium shadow-lg ${toast.type === "error"
                 ? "border-drac-red/40 text-drac-red"
                 : "border-drac-green/40 text-drac-green"
-            }`}
+              }`}
           >
             {toast.message}
           </div>
         </div>
       )}
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-1 w-full">
         {/* Page Header */}
         <div className="mb-8">
           <h1 className="text-2xl sm:text-3xl font-heading font-bold text-drac-fg">
@@ -229,7 +229,7 @@ export default function DashboardPage() {
                   No problems due right now. Keep solving on LeetCode — they'll
                   show up here when it's time to revise.
                 </p>
-                <button 
+                <button
                   onClick={loadMockData}
                   className="px-5 py-2 bg-drac-surface hover:bg-drac-subtle text-drac-fg rounded-md text-sm font-medium transition-colors border border-drac-comment/20"
                 >
@@ -281,6 +281,8 @@ export default function DashboardPage() {
           </div>
         </div>
       </div>
+
+      <Footer />
     </div>
   );
 }

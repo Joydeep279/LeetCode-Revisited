@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import Navbar from "../components/Navbar";
 import LoadingSpinner from "../components/LoadingSpinner";
+import Footer from "../components/Footer";
 import { getAllProblems, getStats } from "../api/api";
 
 const INTERVAL_LABELS = ["Day 1", "Day 3", "Day 7", "Day 15", "Day 30", "Day 60"];
@@ -141,10 +142,10 @@ export default function ProgressPage() {
   }
 
   return (
-    <div className="min-h-screen bg-drac-bg">
+    <div className="min-h-screen bg-drac-bg flex flex-col">
       <Navbar username={username} />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-1 w-full">
         {/* Page Header */}
         <div className="mb-8 animate-fade-in">
           <h1 className="text-2xl sm:text-3xl font-heading font-bold text-drac-fg">
@@ -383,6 +384,8 @@ export default function ProgressPage() {
           </div>
         )}
       </div>
+
+      <Footer />
     </div>
   );
 }
