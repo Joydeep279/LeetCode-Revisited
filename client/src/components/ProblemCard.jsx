@@ -15,40 +15,40 @@ export default function ProblemCard({ problem, onComplete, completing }) {
   const intervalLabel = INTERVAL_LABELS[problem.currentInterval] || "Graduated";
 
   return (
-    <div className="glass-card-hover p-5 animate-slide-up group" style={{ animationDelay: `${Math.random() * 0.2}s` }}>
+    <div className="drac-card-hover p-5 animate-fade-in">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         {/* Left: Problem Info */}
         <div className="flex-1 min-w-0">
-          <div className="flex items-center gap-3 mb-2">
-            <span className={`px-2.5 py-0.5 text-xs font-bold rounded-md ${difficultyClass}`}>
+          <div className="flex items-center gap-2.5 mb-2">
+            <span className={`px-2 py-0.5 text-xs font-bold rounded ${difficultyClass}`}>
               {problem.difficulty}
             </span>
-            <span className="flex items-center gap-1 text-xs text-gray-500">
+            <span className="flex items-center gap-1 text-xs text-drac-comment">
               <Clock className="w-3 h-3" />
               {intervalLabel}
             </span>
             {isOverdue && (
-              <span className="px-2 py-0.5 text-xs font-medium text-lc-red-400 bg-lc-red-400/10 rounded-md animate-pulse">
+              <span className="px-2 py-0.5 text-xs font-semibold text-drac-red bg-drac-red/10 rounded border border-drac-red/20">
                 Overdue
               </span>
             )}
           </div>
 
-          <h3 className="text-base font-semibold text-gray-100 truncate mb-2 group-hover:text-white transition-colors">
+          <h3 className="text-base font-heading font-semibold text-drac-fg truncate mb-2">
             {problem.title}
           </h3>
 
           {/* Topic Tags */}
           {problem.topicTags && problem.topicTags.length > 0 && (
             <div className="flex items-center gap-1.5 flex-wrap">
-              <Tag className="w-3 h-3 text-gray-500" />
+              <Tag className="w-3 h-3 text-drac-comment" />
               {problem.topicTags.slice(0, 4).map((tag, i) => (
                 <span key={i} className="tag-badge">
                   {tag}
                 </span>
               ))}
               {problem.topicTags.length > 4 && (
-                <span className="text-xs text-gray-500">+{problem.topicTags.length - 4}</span>
+                <span className="text-xs text-drac-comment">+{problem.topicTags.length - 4}</span>
               )}
             </div>
           )}

@@ -7,8 +7,8 @@ export default function Navbar({ username, onSync, syncing }) {
 
   const isActive = (path) =>
     location.pathname.includes(path)
-      ? "text-lc-purple-400 border-b-2 border-lc-purple-400"
-      : "text-gray-400 hover:text-gray-200 border-b-2 border-transparent";
+      ? "text-drac-pink border-b-2 border-drac-pink"
+      : "text-drac-comment hover:text-drac-fg border-b-2 border-transparent";
 
   const handleLogout = () => {
     localStorage.removeItem("lc_revisited_session");
@@ -16,15 +16,17 @@ export default function Navbar({ username, onSync, syncing }) {
   };
 
   return (
-    <nav className="sticky top-0 z-50 bg-lc-dark-900/80 backdrop-blur-xl border-b border-white/5">
+    <nav className="sticky top-0 z-50 bg-drac-darker border-b border-drac-comment/20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
+        <div className="flex items-center justify-between h-14">
           {/* Logo */}
-          <Link to={username ? `/dashboard/${username}` : "/"} className="flex items-center gap-3 group">
-            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-lc-purple-500 to-lc-blue-500 flex items-center justify-center shadow-lg shadow-lc-purple-500/20 group-hover:shadow-lc-purple-500/40 transition-shadow">
-              <Brain className="w-5 h-5 text-white" />
+          <Link to={username ? `/dashboard/${username}` : "/"} className="flex items-center gap-2.5 group">
+            <div className="w-8 h-8 rounded-md bg-drac-purple flex items-center justify-center">
+              <Brain className="w-4.5 h-4.5 text-drac-bg" />
             </div>
-            <span className="text-lg font-bold text-gradient hidden sm:block">LeetRevise</span>
+            <span className="text-base font-heading font-bold text-drac-purple hidden sm:block tracking-tight">
+              LeetRevise
+            </span>
           </Link>
 
           {/* Navigation Links */}
@@ -32,14 +34,14 @@ export default function Navbar({ username, onSync, syncing }) {
             <div className="flex items-center gap-1">
               <Link
                 to={`/dashboard/${username}`}
-                className={`flex items-center gap-2 px-4 py-2 text-sm font-medium transition-all ${isActive("dashboard")}`}
+                className={`flex items-center gap-2 px-3 py-2 text-sm font-medium transition-colors ${isActive("dashboard")}`}
               >
                 <Brain className="w-4 h-4" />
                 <span className="hidden sm:inline">Dashboard</span>
               </Link>
               <Link
                 to={`/progress/${username}`}
-                className={`flex items-center gap-2 px-4 py-2 text-sm font-medium transition-all ${isActive("progress")}`}
+                className={`flex items-center gap-2 px-3 py-2 text-sm font-medium transition-colors ${isActive("progress")}`}
               >
                 <BarChart3 className="w-4 h-4" />
                 <span className="hidden sm:inline">Progress</span>
@@ -48,7 +50,7 @@ export default function Navbar({ username, onSync, syncing }) {
           )}
 
           {/* Right Side */}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2.5">
             {username && onSync && (
               <button
                 onClick={onSync}
@@ -60,14 +62,14 @@ export default function Navbar({ username, onSync, syncing }) {
               </button>
             )}
             {username && (
-              <div className="flex items-center gap-3">
-                <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-lc-dark-700/60 border border-white/5">
-                  <div className="w-2 h-2 rounded-full bg-lc-green-400 animate-pulse"></div>
-                  <span className="text-sm text-gray-300 font-medium">{username}</span>
+              <div className="flex items-center gap-2.5">
+                <div className="flex items-center gap-2 px-2.5 py-1 rounded-md bg-drac-current border border-drac-comment/20">
+                  <div className="w-1.5 h-1.5 rounded-full bg-drac-green"></div>
+                  <span className="text-sm text-drac-fg font-medium">{username}</span>
                 </div>
                 <button
                   onClick={handleLogout}
-                  className="p-1.5 text-gray-400 hover:text-lc-red-400 hover:bg-lc-red-400/10 rounded-lg transition-colors"
+                  className="p-1.5 text-drac-comment hover:text-drac-red hover:bg-drac-red/10 rounded-md transition-colors"
                   title="Logout"
                 >
                   <LogOut className="w-4 h-4" />

@@ -114,7 +114,7 @@ export default function DashboardPage() {
       difficulties: { Easy: 5, Medium: 8, Hard: 2 },
       lastSyncedAt: new Date().toISOString(),
     });
-    showToast("Loaded Demo Data!");
+    showToast("Loaded demo data");
   };
 
   const handleSync = async () => {
@@ -132,7 +132,7 @@ export default function DashboardPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen mesh-gradient">
+      <div className="min-h-screen bg-drac-bg">
         <Navbar username={username} />
         <LoadingSpinner message="Loading your revision dashboard..." />
       </div>
@@ -140,17 +140,17 @@ export default function DashboardPage() {
   }
 
   return (
-    <div className="min-h-screen mesh-gradient">
+    <div className="min-h-screen bg-drac-bg">
       <Navbar username={username} onSync={handleSync} syncing={syncing} />
 
       {/* Toast Notification */}
       {toast && (
-        <div className="fixed top-20 right-4 z-50 animate-slide-up">
+        <div className="fixed top-16 right-4 z-50 animate-slide-up">
           <div
-            className={`glass-card px-5 py-3 text-sm font-medium shadow-2xl ${
+            className={`drac-card px-4 py-2.5 text-sm font-medium shadow-lg ${
               toast.type === "error"
-                ? "border-lc-red-400/30 text-lc-red-400"
-                : "border-lc-green-400/30 text-lc-green-400"
+                ? "border-drac-red/40 text-drac-red"
+                : "border-drac-green/40 text-drac-green"
             }`}
           >
             {toast.message}
@@ -161,19 +161,19 @@ export default function DashboardPage() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Page Header */}
         <div className="mb-8">
-          <h1 className="text-2xl sm:text-3xl font-bold text-gray-100">
-            Today's <span className="text-gradient">Revision</span>
+          <h1 className="text-2xl sm:text-3xl font-heading font-bold text-drac-fg">
+            Today's <span className="text-drac-pink">revision</span>
           </h1>
-          <p className="text-gray-400 mt-1">
+          <p className="text-drac-comment mt-1 text-sm">
             {problems.length > 0
-              ? `You have ${problems.length} problem${problems.length !== 1 ? "s" : ""} to review today`
-              : "You're all caught up!"}
+              ? `${problems.length} problem${problems.length !== 1 ? "s" : ""} due for review`
+              : "You're all caught up."}
           </p>
         </div>
 
         {/* Stats Row */}
         {stats && (
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-8">
             <StatsCard
               icon={BookOpen}
               label="Total Problems"
@@ -205,7 +205,7 @@ export default function DashboardPage() {
           </div>
         )}
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Problem List — 2/3 width */}
           <div className="lg:col-span-2">
             {problems.length > 0 ? (
@@ -220,48 +220,47 @@ export default function DashboardPage() {
                 ))}
               </div>
             ) : (
-              <div className="glass-card p-12 text-center animate-fade-in">
-                <div className="w-20 h-20 rounded-2xl bg-lc-green-500/10 flex items-center justify-center mx-auto mb-5">
-                  <Inbox className="w-10 h-10 text-lc-green-400" />
+              <div className="drac-card p-12 text-center animate-fade-in">
+                <div className="w-16 h-16 rounded-lg bg-drac-green/10 flex items-center justify-center mx-auto mb-4">
+                  <Inbox className="w-8 h-8 text-drac-green" />
                 </div>
-                <h3 className="text-xl font-semibold text-gray-100 mb-2">All Clear! 🎉</h3>
-                <p className="text-gray-400 max-w-sm mx-auto mb-6">
-                  No problems due for review right now. Keep solving new problems on LeetCode,
-                  and they'll appear here when it's time to revise.
+                <h3 className="text-lg font-heading font-semibold text-drac-fg mb-2">All clear</h3>
+                <p className="text-drac-comment text-sm max-w-sm mx-auto mb-5">
+                  No problems due right now. Keep solving on LeetCode — they'll
+                  show up here when it's time to revise.
                 </p>
                 <button 
                   onClick={loadMockData}
-                  className="px-6 py-2 bg-lc-dark-600 hover:bg-lc-dark-500 text-gray-200 rounded-lg text-sm font-medium transition-colors border border-lc-dark-400"
+                  className="px-5 py-2 bg-drac-surface hover:bg-drac-subtle text-drac-fg rounded-md text-sm font-medium transition-colors border border-drac-comment/20"
                 >
-                  Load Demo Data
+                  Load demo data
                 </button>
               </div>
-
             )}
           </div>
 
           {/* Sidebar — 1/3 width */}
-          <div className="space-y-6">
+          <div className="space-y-4">
             {stats && <StreakTracker streak={stats.streak} />}
 
             {/* Difficulty Breakdown */}
             {stats && (
-              <div className="glass-card p-6 animate-slide-up" style={{ animationDelay: "0.3s" }}>
-                <h3 className="text-sm font-medium text-gray-400 mb-4">Difficulty Breakdown</h3>
+              <div className="drac-card p-5 animate-fade-in" style={{ animationDelay: "0.15s" }}>
+                <h3 className="text-xs text-drac-comment font-medium uppercase tracking-wide mb-4">Difficulty Breakdown</h3>
                 <div className="space-y-3">
                   {[
-                    { label: "Easy", count: stats.difficulties.Easy, color: "bg-lc-green-400", total: stats.totalProblems },
-                    { label: "Medium", count: stats.difficulties.Medium, color: "bg-lc-yellow-400", total: stats.totalProblems },
-                    { label: "Hard", count: stats.difficulties.Hard, color: "bg-lc-red-400", total: stats.totalProblems },
+                    { label: "Easy", count: stats.difficulties.Easy, color: "bg-drac-green", total: stats.totalProblems },
+                    { label: "Medium", count: stats.difficulties.Medium, color: "bg-drac-orange", total: stats.totalProblems },
+                    { label: "Hard", count: stats.difficulties.Hard, color: "bg-drac-red", total: stats.totalProblems },
                   ].map((d) => (
                     <div key={d.label}>
                       <div className="flex justify-between text-sm mb-1">
-                        <span className="text-gray-300">{d.label}</span>
-                        <span className="text-gray-500">{d.count}</span>
+                        <span className="text-drac-fg text-sm">{d.label}</span>
+                        <span className="text-drac-comment text-sm">{d.count}</span>
                       </div>
-                      <div className="h-2 bg-lc-dark-600 rounded-full overflow-hidden">
+                      <div className="h-1.5 bg-drac-surface rounded-full overflow-hidden">
                         <div
-                          className={`h-full ${d.color} rounded-full transition-all duration-700`}
+                          className={`h-full ${d.color} rounded-full transition-all duration-500`}
                           style={{ width: `${d.total > 0 ? (d.count / d.total) * 100 : 0}%` }}
                         ></div>
                       </div>
@@ -273,8 +272,8 @@ export default function DashboardPage() {
 
             {/* Last Synced */}
             {stats?.lastSyncedAt && (
-              <div className="glass-card p-4 animate-slide-up" style={{ animationDelay: "0.4s" }}>
-                <p className="text-xs text-gray-500 text-center">
+              <div className="drac-card p-3 animate-fade-in" style={{ animationDelay: "0.2s" }}>
+                <p className="text-xs text-drac-comment text-center">
                   Last synced: {new Date(stats.lastSyncedAt).toLocaleString()}
                 </p>
               </div>

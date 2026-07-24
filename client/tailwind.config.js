@@ -7,65 +7,41 @@ export default {
   theme: {
     extend: {
       colors: {
-        'lc-dark': {
-          900: '#0a0a0f',
-          800: '#111118',
-          700: '#1a1a24',
-          600: '#232330',
-          500: '#2c2c3a',
-        },
-        'lc-green': {
-          400: '#2cbb5d',
-          500: '#1f9e48',
-          600: '#178a3a',
-        },
-        'lc-yellow': {
-          400: '#ffc01e',
-          500: '#f5a623',
-        },
-        'lc-red': {
-          400: '#ef4743',
-          500: '#d32f2f',
-        },
-        'lc-blue': {
-          400: '#5b8af0',
-          500: '#3b82f6',
-        },
-        'lc-purple': {
-          400: '#a78bfa',
-          500: '#8b5cf6',
+        'drac': {
+          bg: '#282A36',
+          current: '#353746',
+          fg: '#F8F8F2',
+          comment: '#6272A4',
+          cyan: '#8BE9FD',
+          green: '#50FA7B',
+          orange: '#FFB86C',
+          pink: '#FF79C6',
+          purple: '#BD93F9',
+          red: '#FF5555',
+          yellow: '#F1FA8C',
+          // Surfaces — slightly lighter/darker variants for depth
+          darker: '#21222C',
+          surface: '#343746',
+          subtle: '#3d4055',
         },
       },
       fontFamily: {
-        sans: ['Inter', 'system-ui', 'sans-serif'],
+        heading: ['"JetBrains Mono"', 'monospace'],
+        sans: ['"Source Sans 3"', 'system-ui', 'sans-serif'],
       },
       animation: {
-        'glow': 'glow 2s ease-in-out infinite alternate',
-        'float': 'float 6s ease-in-out infinite',
-        'slide-up': 'slideUp 0.5s ease-out',
-        'fade-in': 'fadeIn 0.5s ease-out',
-        'pulse-slow': 'pulse 3s ease-in-out infinite',
+        'slide-up': 'slideUp 0.35s ease-out forwards',
+        'fade-in': 'fadeIn 0.4s ease-out forwards',
       },
       keyframes: {
-        glow: {
-          '0%': { boxShadow: '0 0 20px rgba(139, 92, 246, 0.3)' },
-          '100%': { boxShadow: '0 0 40px rgba(139, 92, 246, 0.6)' },
-        },
-        float: {
-          '0%, 100%': { transform: 'translateY(0)' },
-          '50%': { transform: 'translateY(-20px)' },
-        },
         slideUp: {
-          '0%': { transform: 'translateY(20px)', opacity: '0' },
+          '0%': { transform: 'translateY(12px)', opacity: '0' },
           '100%': { transform: 'translateY(0)', opacity: '1' },
         },
         fadeIn: {
           '0%': { opacity: '0' },
           '100%': { opacity: '1' },
         },
-      },
-      backdropBlur: {
-        xs: '2px',
       },
     },
   },

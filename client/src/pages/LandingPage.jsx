@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Brain, ArrowRight, Zap, Target, TrendingUp, Sparkles } from "lucide-react";
+import { Brain, ArrowRight, Zap, Target, TrendingUp } from "lucide-react";
 import { registerUser } from "../api/api";
 
 export default function LandingPage() {
@@ -59,70 +59,36 @@ export default function LandingPage() {
     }
   };
 
-  const features = [
-    {
-      icon: Zap,
-      title: "Smart Scheduling",
-      desc: "Spaced repetition ensures you review at the optimal time — Day 1, 3, 7, 15, 30, 60.",
-      color: "text-lc-yellow-400",
-      bg: "bg-lc-yellow-400/10",
-    },
-    {
-      icon: Target,
-      title: "Auto-Sync",
-      desc: "Your solved problems are automatically fetched from LeetCode every 6 hours.",
-      color: "text-lc-green-400",
-      bg: "bg-lc-green-500/10",
-    },
-    {
-      icon: TrendingUp,
-      title: "Track Progress",
-      desc: "Monitor your revision streak, completion rate, and upcoming reviews.",
-      color: "text-lc-blue-400",
-      bg: "bg-lc-blue-500/10",
-    },
-  ];
-
   return (
-    <div className="min-h-screen mesh-gradient relative overflow-hidden">
-      {/* Animated Background Orbs */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-lc-purple-500/5 rounded-full blur-3xl animate-float"></div>
-        <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-lc-blue-500/5 rounded-full blur-3xl animate-float" style={{ animationDelay: '2s' }}></div>
-        <div className="absolute top-1/2 left-1/2 w-64 h-64 bg-lc-green-500/5 rounded-full blur-3xl animate-float" style={{ animationDelay: '4s' }}></div>
-      </div>
+    <div className="min-h-screen bg-drac-bg">
+      <div className="max-w-3xl mx-auto px-6 pt-24 pb-20">
 
-      <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-20">
-        {/* Hero */}
-        <div className="text-center mb-16 animate-fade-in">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-lc-purple-500/10 border border-lc-purple-500/20 text-lc-purple-400 text-sm font-medium mb-8">
-            <Sparkles className="w-4 h-4" />
-            Powered by Spaced Repetition
-          </div>
-
-          <div className="flex justify-center mb-8">
-            <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-lc-purple-500 to-lc-blue-500 flex items-center justify-center shadow-2xl shadow-lc-purple-500/30 animate-glow">
-              <Brain className="w-10 h-10 text-white" />
+        {/* Hero — left-aligned, no floating orbs, no sparkle badge */}
+        <div className="mb-20 animate-fade-in">
+          <div className="flex items-center gap-3 mb-8">
+            <div className="w-12 h-12 rounded-lg bg-drac-purple flex items-center justify-center">
+              <Brain className="w-6 h-6 text-drac-bg" />
             </div>
+            <span className="font-heading font-bold text-xl text-drac-purple tracking-tight">
+              LeetRevise
+            </span>
           </div>
 
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold mb-6 leading-tight">
-            Never Forget a
-            <span className="block text-gradient">LeetCode Solution</span>
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-heading font-extrabold mb-5 leading-tight text-drac-fg">
+            You solved it once.
+            <br />
+            <span className="text-drac-pink">Don't solve it again from scratch.</span>
           </h1>
 
-          <p className="text-lg sm:text-xl text-gray-400 max-w-2xl mx-auto mb-10 leading-relaxed">
-            Stop re-solving problems you've already cracked. Our smart revision system
-            uses the <span className="text-gray-200 font-medium">forgetting curve</span> to schedule reviews
-            exactly when your memory needs them.
+          <p className="text-base sm:text-lg text-drac-comment max-w-xl mb-10 leading-relaxed">
+            LeetRevise syncs your solved LeetCode problems and schedules reviews
+            using spaced repetition. You get reminded right before you'd forget —
+            Day 1, 3, 7, 15, 30, 60.
           </p>
 
           {/* Username Form */}
-          <form
-            onSubmit={handleSubmit}
-            className="max-w-md mx-auto animate-slide-up"
-          >
-            <div className="glass-card gradient-border p-2 flex items-center gap-2">
+          <form onSubmit={handleSubmit} className="max-w-md animate-slide-up">
+            <div className="flex items-center gap-2">
               <input
                 type="text"
                 value={username}
@@ -130,17 +96,17 @@ export default function LandingPage() {
                   setUsername(e.target.value);
                   setError("");
                 }}
-                placeholder="Enter your LeetCode username"
-                className="flex-1 px-4 py-3 bg-transparent text-gray-100 placeholder-gray-500 focus:outline-none text-sm sm:text-base"
+                placeholder="LeetCode username"
+                className="input-field flex-1"
                 disabled={loading}
               />
               <button
                 type="submit"
                 disabled={loading || !username.trim()}
-                className="btn-primary flex items-center gap-2 text-sm whitespace-nowrap disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0"
+                className="btn-primary flex items-center gap-2 whitespace-nowrap disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {loading ? (
-                  <div className="w-5 h-5 border-2 border-white/20 border-t-white rounded-full animate-spin"></div>
+                  <div className="w-4 h-4 border-2 border-drac-bg/30 border-t-drac-bg rounded-full animate-spin"></div>
                 ) : (
                   <>
                     Start <ArrowRight className="w-4 h-4" />
@@ -150,60 +116,81 @@ export default function LandingPage() {
             </div>
 
             {error && (
-              <p className="mt-3 text-sm text-lc-red-400 animate-slide-up">{error}</p>
+              <p className="mt-2 text-sm text-drac-red animate-fade-in">{error}</p>
             )}
 
-            <p className="mt-4 text-xs text-gray-600">
-              No login required. Just your public LeetCode username.
+            <p className="mt-3 text-xs text-drac-comment/60">
+              No account needed. Just your public LeetCode username.
             </p>
           </form>
         </div>
 
-        {/* Features Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-20">
-          {features.map((feat, i) => (
-            <div
-              key={i}
-              className="glass-card-hover p-6 text-center animate-slide-up"
-              style={{ animationDelay: `${(i + 1) * 0.15}s` }}
-            >
-              <div className={`w-14 h-14 rounded-2xl ${feat.bg} flex items-center justify-center mx-auto mb-4`}>
-                <feat.icon className={`w-7 h-7 ${feat.color}`} />
-              </div>
-              <h3 className="text-lg font-semibold text-gray-100 mb-2">{feat.title}</h3>
-              <p className="text-sm text-gray-400 leading-relaxed">{feat.desc}</p>
-            </div>
-          ))}
-        </div>
-
-        {/* Schedule Preview */}
-        <div className="mt-20 animate-fade-in">
-          <h2 className="text-2xl font-bold text-center text-gray-100 mb-8">
-            The <span className="text-gradient">Revision Schedule</span>
-          </h2>
-          <div className="flex flex-wrap justify-center gap-3">
+        {/* Features — compact list, not 3 big cards */}
+        <div className="mb-16 animate-fade-in" style={{ animationDelay: "0.15s" }}>
+          <h2 className="font-heading font-bold text-lg text-drac-fg mb-5">How it works</h2>
+          <div className="space-y-4">
             {[
-              { day: "Day 1", desc: "Fresh memory" },
-              { day: "Day 3", desc: "First reinforcement" },
-              { day: "Day 7", desc: "Weekly review" },
-              { day: "Day 15", desc: "Bi-weekly check" },
-              { day: "Day 30", desc: "Monthly recall" },
-              { day: "Day 60", desc: "Long-term lock" },
-            ].map((item, i) => (
-              <div
-                key={i}
-                className="glass-card px-5 py-3 flex items-center gap-3 animate-slide-up"
-                style={{ animationDelay: `${(i + 4) * 0.1}s` }}
-              >
-                <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-lc-purple-500 to-lc-blue-500 flex items-center justify-center text-white text-xs font-bold">
-                  {i + 1}
+              {
+                icon: Zap,
+                title: "Auto-scheduled reviews",
+                desc: "Spaced repetition picks the right day to resurface each problem. You just show up.",
+                color: "text-drac-orange",
+                bg: "bg-drac-orange/10",
+              },
+              {
+                icon: Target,
+                title: "Syncs from LeetCode",
+                desc: "Your solved problems are pulled automatically every 6 hours. No manual input.",
+                color: "text-drac-green",
+                bg: "bg-drac-green/10",
+              },
+              {
+                icon: TrendingUp,
+                title: "Track your progress",
+                desc: "See your streak, completion rate, and what's coming up for review this week.",
+                color: "text-drac-cyan",
+                bg: "bg-drac-cyan/10",
+              },
+            ].map((feat, i) => (
+              <div key={i} className="drac-card p-4 flex items-start gap-4">
+                <div className={`w-9 h-9 rounded-md ${feat.bg} flex items-center justify-center flex-shrink-0 mt-0.5`}>
+                  <feat.icon className={`w-4.5 h-4.5 ${feat.color}`} />
                 </div>
                 <div>
-                  <p className="text-sm font-semibold text-gray-100">{item.day}</p>
-                  <p className="text-xs text-gray-500">{item.desc}</p>
+                  <h3 className="text-sm font-heading font-semibold text-drac-fg mb-0.5">{feat.title}</h3>
+                  <p className="text-sm text-drac-comment leading-relaxed">{feat.desc}</p>
                 </div>
               </div>
             ))}
+          </div>
+        </div>
+
+        {/* Schedule — simple horizontal stepper */}
+        <div className="animate-fade-in" style={{ animationDelay: "0.3s" }}>
+          <h2 className="font-heading font-bold text-lg text-drac-fg mb-5">The review schedule</h2>
+          <div className="drac-card p-5">
+            <div className="flex items-center justify-between gap-1">
+              {[
+                { day: "1", label: "Fresh" },
+                { day: "3", label: "Reinforce" },
+                { day: "7", label: "Weekly" },
+                { day: "15", label: "Bi-weekly" },
+                { day: "30", label: "Monthly" },
+                { day: "60", label: "Lock in" },
+              ].map((step, i, arr) => (
+                <div key={i} className="flex items-center flex-1">
+                  <div className="flex flex-col items-center flex-shrink-0">
+                    <div className="w-8 h-8 rounded-md bg-drac-purple/15 border border-drac-purple/25 flex items-center justify-center text-xs font-heading font-bold text-drac-purple mb-1">
+                      {step.day}
+                    </div>
+                    <span className="text-[10px] text-drac-comment">{step.label}</span>
+                  </div>
+                  {i < arr.length - 1 && (
+                    <div className="flex-1 h-px bg-drac-comment/20 mx-1.5 mt-[-14px]"></div>
+                  )}
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>

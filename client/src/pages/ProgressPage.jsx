@@ -28,23 +28,22 @@ const SORT_OPTIONS = [
 
 function getProgressPercent(currentInterval, isCompleted) {
   if (isCompleted) return 100;
-  // Each interval step = ~16.67% of progress through 6 intervals
   return Math.round((currentInterval / REVIEW_INTERVALS.length) * 100);
 }
 
 function getProgressColor(percent) {
-  if (percent >= 100) return "bg-lc-green-400";
-  if (percent >= 60) return "bg-lc-blue-400";
-  if (percent >= 30) return "bg-lc-yellow-400";
-  return "bg-lc-purple-400";
+  if (percent >= 100) return "bg-drac-green";
+  if (percent >= 60) return "bg-drac-cyan";
+  if (percent >= 30) return "bg-drac-orange";
+  return "bg-drac-purple";
 }
 
 function getStatusLabel(problem) {
-  if (problem.isCompleted) return { text: "Graduated", class: "text-lc-green-400 bg-lc-green-400/10 border-lc-green-400/20" };
+  if (problem.isCompleted) return { text: "Graduated", class: "text-drac-green bg-drac-green/10 border-drac-green/25" };
   const nextReview = new Date(problem.nextReviewDate);
   const now = new Date();
-  if (nextReview <= now) return { text: "Due Now", class: "text-lc-red-400 bg-lc-red-400/10 border-lc-red-400/20 animate-pulse" };
-  return { text: `Review ${INTERVAL_LABELS[problem.currentInterval]}`, class: "text-lc-blue-400 bg-lc-blue-500/10 border-lc-blue-500/20" };
+  if (nextReview <= now) return { text: "Due Now", class: "text-drac-red bg-drac-red/10 border-drac-red/25" };
+  return { text: `Review ${INTERVAL_LABELS[problem.currentInterval]}`, class: "text-drac-cyan bg-drac-cyan/10 border-drac-cyan/25" };
 }
 
 export default function ProgressPage() {
@@ -79,7 +78,6 @@ export default function ProgressPage() {
   const filteredProblems = useMemo(() => {
     let result = [...problems];
 
-    // Search filter
     if (search.trim()) {
       const q = search.toLowerCase();
       result = result.filter(
@@ -89,12 +87,10 @@ export default function ProgressPage() {
       );
     }
 
-    // Difficulty filter
     if (difficultyFilter !== "All") {
       result = result.filter((p) => p.difficulty === difficultyFilter);
     }
 
-    // Status filter
     if (statusFilter !== "All") {
       if (statusFilter === "Completed") {
         result = result.filter((p) => p.isCompleted);
@@ -103,7 +99,6 @@ export default function ProgressPage() {
       }
     }
 
-    // Sort
     const diffOrder = { Easy: 0, Medium: 1, Hard: 2 };
     result.sort((a, b) => {
       switch (sortBy) {
@@ -138,7 +133,7 @@ export default function ProgressPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen mesh-gradient">
+      <div className="min-h-screen bg-drac-bg">
         <Navbar username={username} />
         <LoadingSpinner message="Loading your progress..." />
       </div>
@@ -146,77 +141,77 @@ export default function ProgressPage() {
   }
 
   return (
-    <div className="min-h-screen mesh-gradient">
+    <div className="min-h-screen bg-drac-bg">
       <Navbar username={username} />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Page Header */}
         <div className="mb-8 animate-fade-in">
-          <h1 className="text-2xl sm:text-3xl font-bold text-gray-100">
-            Your <span className="text-gradient">Progress</span>
+          <h1 className="text-2xl sm:text-3xl font-heading font-bold text-drac-fg">
+            Your <span className="text-drac-cyan">progress</span>
           </h1>
-          <p className="text-gray-400 mt-1">
+          <p className="text-drac-comment mt-1 text-sm">
             Track your spaced repetition journey across all problems
           </p>
         </div>
 
         {/* Progress Overview Cards */}
         {progressSummary && (
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-            <div className="glass-card p-5 bg-gradient-to-br from-lc-purple-500/20 to-transparent border border-lc-purple-500/20 animate-slide-up">
-              <p className="text-sm text-gray-400 font-medium">Total Tracked</p>
-              <p className="text-2xl font-bold text-gray-100">{progressSummary.total}</p>
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-8">
+            <div className="drac-card p-4 border-drac-purple/30 animate-fade-in">
+              <p className="text-xs text-drac-comment font-medium uppercase tracking-wide">Total Tracked</p>
+              <p className="text-2xl font-heading font-bold text-drac-fg mt-1">{progressSummary.total}</p>
             </div>
-            <div className="glass-card p-5 bg-gradient-to-br from-lc-blue-500/20 to-transparent border border-lc-blue-500/20 animate-slide-up" style={{ animationDelay: "0.1s" }}>
-              <p className="text-sm text-gray-400 font-medium">In Progress</p>
-              <p className="text-2xl font-bold text-gray-100">{progressSummary.active}</p>
+            <div className="drac-card p-4 border-drac-cyan/30 animate-fade-in" style={{ animationDelay: "0.06s" }}>
+              <p className="text-xs text-drac-comment font-medium uppercase tracking-wide">In Progress</p>
+              <p className="text-2xl font-heading font-bold text-drac-fg mt-1">{progressSummary.active}</p>
             </div>
-            <div className="glass-card p-5 bg-gradient-to-br from-lc-green-500/20 to-transparent border border-lc-green-500/20 animate-slide-up" style={{ animationDelay: "0.2s" }}>
-              <div className="flex items-center gap-2">
-                <p className="text-sm text-gray-400 font-medium">Graduated</p>
-                <Trophy className="w-3.5 h-3.5 text-lc-green-400" />
+            <div className="drac-card p-4 border-drac-green/30 animate-fade-in" style={{ animationDelay: "0.12s" }}>
+              <div className="flex items-center gap-1.5">
+                <p className="text-xs text-drac-comment font-medium uppercase tracking-wide">Graduated</p>
+                <Trophy className="w-3 h-3 text-drac-green" />
               </div>
-              <p className="text-2xl font-bold text-gray-100">{progressSummary.graduated}</p>
+              <p className="text-2xl font-heading font-bold text-drac-fg mt-1">{progressSummary.graduated}</p>
             </div>
-            <div className="glass-card p-5 bg-gradient-to-br from-lc-yellow-400/20 to-transparent border border-lc-yellow-400/20 animate-slide-up" style={{ animationDelay: "0.3s" }}>
-              <p className="text-sm text-gray-400 font-medium">Avg. Progress</p>
-              <p className="text-2xl font-bold text-gray-100">{progressSummary.avgProgress}%</p>
+            <div className="drac-card p-4 border-drac-orange/30 animate-fade-in" style={{ animationDelay: "0.18s" }}>
+              <p className="text-xs text-drac-comment font-medium uppercase tracking-wide">Avg. Progress</p>
+              <p className="text-2xl font-heading font-bold text-drac-fg mt-1">{progressSummary.avgProgress}%</p>
             </div>
           </div>
         )}
 
         {/* Filters & Search Bar */}
-        <div className="glass-card p-4 mb-6 animate-slide-up" style={{ animationDelay: "0.2s" }}>
-          <div className="flex flex-col lg:flex-row gap-4">
+        <div className="drac-card p-4 mb-5 animate-fade-in" style={{ animationDelay: "0.1s" }}>
+          <div className="flex flex-col lg:flex-row gap-3">
             {/* Search */}
             <div className="relative flex-1">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-drac-comment" />
               <input
                 type="text"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 placeholder="Search problems or tags..."
-                className="w-full pl-10 pr-4 py-2.5 bg-lc-dark-700/80 border border-white/10 rounded-xl text-gray-100 placeholder-gray-500 focus:outline-none focus:border-lc-purple-500/50 focus:ring-2 focus:ring-lc-purple-500/20 transition-all duration-300 text-sm"
+                className="w-full pl-9 pr-4 py-2 bg-drac-bg border border-drac-comment/25 rounded-md text-drac-fg placeholder-drac-comment focus:outline-none focus:border-drac-purple focus:ring-1 focus:ring-drac-purple/30 transition-colors text-sm"
               />
             </div>
 
             {/* Difficulty Filter */}
             <div className="flex items-center gap-2">
-              <Filter className="w-4 h-4 text-gray-500 hidden lg:block" />
-              <div className="flex gap-1.5">
+              <Filter className="w-4 h-4 text-drac-comment hidden lg:block" />
+              <div className="flex gap-1">
                 {DIFFICULTY_FILTERS.map((d) => (
                   <button
                     key={d}
                     onClick={() => setDifficultyFilter(d)}
-                    className={`px-3 py-1.5 text-xs font-medium rounded-lg transition-all duration-200 ${difficultyFilter === d
+                    className={`px-2.5 py-1.5 text-xs font-medium rounded-md transition-colors ${difficultyFilter === d
                         ? d === "Easy"
-                          ? "bg-lc-green-400/20 text-lc-green-400 border border-lc-green-400/30"
+                          ? "bg-drac-green/15 text-drac-green border border-drac-green/25"
                           : d === "Medium"
-                            ? "bg-lc-yellow-400/20 text-lc-yellow-400 border border-lc-yellow-400/30"
+                            ? "bg-drac-orange/15 text-drac-orange border border-drac-orange/25"
                             : d === "Hard"
-                              ? "bg-lc-red-400/20 text-lc-red-400 border border-lc-red-400/30"
-                              : "bg-lc-purple-500/20 text-lc-purple-400 border border-lc-purple-500/30"
-                        : "bg-lc-dark-600/60 text-gray-400 border border-white/5 hover:border-white/10"
+                              ? "bg-drac-red/15 text-drac-red border border-drac-red/25"
+                              : "bg-drac-purple/15 text-drac-purple border border-drac-purple/25"
+                        : "bg-drac-surface text-drac-comment border border-drac-comment/15 hover:border-drac-comment/30"
                       }`}
                   >
                     {d}
@@ -226,14 +221,14 @@ export default function ProgressPage() {
             </div>
 
             {/* Status Filter */}
-            <div className="flex gap-1.5">
+            <div className="flex gap-1">
               {STATUS_FILTERS.map((s) => (
                 <button
                   key={s}
                   onClick={() => setStatusFilter(s)}
-                  className={`px-3 py-1.5 text-xs font-medium rounded-lg transition-all duration-200 ${statusFilter === s
-                      ? "bg-lc-purple-500/20 text-lc-purple-400 border border-lc-purple-500/30"
-                      : "bg-lc-dark-600/60 text-gray-400 border border-white/5 hover:border-white/10"
+                  className={`px-2.5 py-1.5 text-xs font-medium rounded-md transition-colors ${statusFilter === s
+                      ? "bg-drac-purple/15 text-drac-purple border border-drac-purple/25"
+                      : "bg-drac-surface text-drac-comment border border-drac-comment/15 hover:border-drac-comment/30"
                     }`}
                 >
                   {s}
@@ -243,11 +238,11 @@ export default function ProgressPage() {
 
             {/* Sort */}
             <div className="flex items-center gap-2">
-              <ArrowUpDown className="w-4 h-4 text-gray-500 hidden lg:block" />
+              <ArrowUpDown className="w-4 h-4 text-drac-comment hidden lg:block" />
               <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value)}
-                className="px-3 py-1.5 bg-lc-dark-600/60 border border-white/5 rounded-lg text-xs text-gray-300 focus:outline-none focus:border-lc-purple-500/50 cursor-pointer"
+                className="px-2.5 py-1.5 bg-drac-surface border border-drac-comment/15 rounded-md text-xs text-drac-fg focus:outline-none focus:border-drac-purple cursor-pointer"
               >
                 {SORT_OPTIONS.map((opt) => (
                   <option key={opt.value} value={opt.value}>
@@ -261,7 +256,7 @@ export default function ProgressPage() {
 
         {/* Results Count */}
         <div className="flex items-center justify-between mb-4">
-          <p className="text-sm text-gray-500">
+          <p className="text-sm text-drac-comment">
             Showing {filteredProblems.length} of {problems.length} problems
           </p>
         </div>
@@ -283,20 +278,20 @@ export default function ProgressPage() {
               return (
                 <div
                   key={problem._id}
-                  className="glass-card-hover p-5 animate-slide-up"
-                  style={{ animationDelay: `${Math.min(idx * 0.03, 0.5)}s` }}
+                  className="drac-card-hover p-5 animate-fade-in"
+                  style={{ animationDelay: `${Math.min(idx * 0.03, 0.4)}s` }}
                 >
                   <div className="flex flex-col sm:flex-row gap-4">
                     {/* Left: Problem Info */}
                     <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-3 mb-2 flex-wrap">
-                        <span className={`px-2.5 py-0.5 text-xs font-bold rounded-md ${difficultyClass}`}>
+                      <div className="flex items-center gap-2.5 mb-2 flex-wrap">
+                        <span className={`px-2 py-0.5 text-xs font-bold rounded ${difficultyClass}`}>
                           {problem.difficulty}
                         </span>
-                        <span className={`px-2 py-0.5 text-xs font-medium rounded-md border ${status.class}`}>
+                        <span className={`px-2 py-0.5 text-xs font-medium rounded border ${status.class}`}>
                           {status.text}
                         </span>
-                        <span className="flex items-center gap-1 text-xs text-gray-500">
+                        <span className="flex items-center gap-1 text-xs text-drac-comment">
                           <Clock className="w-3 h-3" />
                           {problem.isCompleted
                             ? "Completed"
@@ -304,34 +299,34 @@ export default function ProgressPage() {
                         </span>
                       </div>
 
-                      <h3 className="text-base font-semibold text-gray-100 truncate mb-2">
+                      <h3 className="text-base font-heading font-semibold text-drac-fg truncate mb-2">
                         {problem.title}
                       </h3>
 
                       {/* Topic Tags */}
                       {problem.topicTags && problem.topicTags.length > 0 && (
                         <div className="flex items-center gap-1.5 flex-wrap mb-3">
-                          <Tag className="w-3 h-3 text-gray-500" />
+                          <Tag className="w-3 h-3 text-drac-comment" />
                           {problem.topicTags.slice(0, 5).map((tag, i) => (
                             <span key={i} className="tag-badge">
                               {tag}
                             </span>
                           ))}
                           {problem.topicTags.length > 5 && (
-                            <span className="text-xs text-gray-500">+{problem.topicTags.length - 5}</span>
+                            <span className="text-xs text-drac-comment">+{problem.topicTags.length - 5}</span>
                           )}
                         </div>
                       )}
 
                       {/* Progress Bar */}
                       <div className="flex items-center gap-3">
-                        <div className="flex-1 h-2 bg-lc-dark-600 rounded-full overflow-hidden">
+                        <div className="flex-1 h-1.5 bg-drac-surface rounded-full overflow-hidden">
                           <div
-                            className={`h-full ${progressColor} rounded-full transition-all duration-700`}
+                            className={`h-full ${progressColor} rounded-full transition-all duration-500`}
                             style={{ width: `${progress}%` }}
                           ></div>
                         </div>
-                        <span className="text-xs font-medium text-gray-400 w-10 text-right">
+                        <span className="text-xs font-heading font-medium text-drac-comment w-10 text-right">
                           {progress}%
                         </span>
                       </div>
@@ -341,19 +336,19 @@ export default function ProgressPage() {
                         {INTERVAL_LABELS.map((label, i) => (
                           <div
                             key={i}
-                            className={`flex-1 h-1 rounded-full transition-all duration-300 ${i < problem.currentInterval || problem.isCompleted
-                                ? "bg-lc-green-400"
+                            className={`flex-1 h-1 rounded-full transition-colors ${i < problem.currentInterval || problem.isCompleted
+                                ? "bg-drac-green"
                                 : i === problem.currentInterval && !problem.isCompleted
-                                  ? "bg-lc-blue-400 animate-pulse"
-                                  : "bg-lc-dark-500"
+                                  ? "bg-drac-cyan"
+                                  : "bg-drac-surface"
                               }`}
                             title={label}
                           ></div>
                         ))}
                       </div>
                       <div className="flex justify-between mt-1">
-                        <span className="text-[10px] text-gray-600">Day 1</span>
-                        <span className="text-[10px] text-gray-600">Day 60</span>
+                        <span className="text-[10px] text-drac-comment/50">Day 1</span>
+                        <span className="text-[10px] text-drac-comment/50">Day 60</span>
                       </div>
                     </div>
 
@@ -375,12 +370,12 @@ export default function ProgressPage() {
             })}
           </div>
         ) : (
-          <div className="glass-card p-12 text-center animate-fade-in">
-            <div className="w-20 h-20 rounded-2xl bg-lc-purple-500/10 flex items-center justify-center mx-auto mb-5">
-              <Search className="w-10 h-10 text-lc-purple-400" />
+          <div className="drac-card p-12 text-center animate-fade-in">
+            <div className="w-16 h-16 rounded-lg bg-drac-purple/10 flex items-center justify-center mx-auto mb-4">
+              <Search className="w-8 h-8 text-drac-purple" />
             </div>
-            <h3 className="text-xl font-semibold text-gray-100 mb-2">No Problems Found</h3>
-            <p className="text-gray-400 max-w-sm mx-auto">
+            <h3 className="text-lg font-heading font-semibold text-drac-fg mb-2">No problems found</h3>
+            <p className="text-drac-comment text-sm max-w-sm mx-auto">
               {problems.length === 0
                 ? "You haven't synced any problems yet. Go back to the dashboard and sync your LeetCode profile."
                 : "Try adjusting your filters or search query."}

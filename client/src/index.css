@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Source+Sans+3:wght@300;400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -12,102 +12,88 @@
   }
 
   body {
-    @apply bg-lc-dark-900 text-gray-100 font-sans antialiased;
+    @apply bg-drac-bg text-drac-fg font-sans antialiased;
     min-height: 100vh;
   }
 
+  ::selection {
+    @apply bg-drac-purple/30 text-drac-fg;
+  }
+
   ::-webkit-scrollbar {
-    width: 6px;
+    width: 8px;
   }
 
   ::-webkit-scrollbar-track {
-    @apply bg-lc-dark-800;
+    @apply bg-drac-darker;
   }
 
   ::-webkit-scrollbar-thumb {
-    @apply bg-lc-dark-500 rounded-full;
+    @apply bg-drac-comment rounded;
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    @apply bg-lc-purple-500;
+    @apply bg-drac-purple;
   }
 }
 
 @layer components {
-  .glass-card {
-    @apply bg-lc-dark-700/60 backdrop-blur-md border border-white/5 rounded-2xl shadow-lg;
+  /* ── Cards ──────────────────────────────────────────────── */
+  .drac-card {
+    @apply bg-drac-current border border-drac-comment/25 rounded-lg;
   }
 
-  .glass-card-hover {
-    @apply glass-card transition-all duration-300 hover:border-lc-purple-500/30 hover:shadow-lc-purple-500/10 hover:shadow-xl hover:-translate-y-0.5;
+  .drac-card-hover {
+    @apply drac-card transition-colors duration-200
+      hover:border-drac-purple/50;
   }
 
-  .gradient-border {
-    position: relative;
-  }
-
-  .gradient-border::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    padding: 1px;
-    border-radius: inherit;
-    background: linear-gradient(135deg, rgba(139, 92, 246, 0.4), rgba(91, 138, 240, 0.2), rgba(44, 187, 93, 0.3));
-    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
-    pointer-events: none;
-  }
-
+  /* ── Buttons ────────────────────────────────────────────── */
   .btn-primary {
-    @apply px-6 py-3 bg-gradient-to-r from-lc-purple-500 to-lc-blue-500 text-white font-semibold rounded-xl
-    transition-all duration-300 hover:shadow-lg hover:shadow-lc-purple-500/25 hover:-translate-y-0.5
-    active:translate-y-0 active:shadow-md;
+    @apply px-5 py-2.5 bg-drac-pink text-drac-bg font-heading font-semibold text-sm rounded-md
+      transition-all duration-200 hover:brightness-110 hover:shadow-md hover:shadow-drac-pink/20
+      active:brightness-95;
   }
 
   .btn-success {
-    @apply px-4 py-2 bg-gradient-to-r from-lc-green-500 to-lc-green-400 text-white font-semibold rounded-xl
-    transition-all duration-300 hover:shadow-lg hover:shadow-lc-green-500/25 hover:-translate-y-0.5
-    active:translate-y-0 active:shadow-md;
+    @apply px-4 py-2 bg-drac-green text-drac-bg font-heading font-semibold text-sm rounded-md
+      transition-all duration-200 hover:brightness-110 hover:shadow-md hover:shadow-drac-green/20
+      active:brightness-95;
   }
 
   .btn-outline {
-    @apply px-4 py-2 border border-lc-purple-500/40 text-lc-purple-400 font-medium rounded-xl
-    transition-all duration-300 hover:bg-lc-purple-500/10 hover:border-lc-purple-500/60;
+    @apply px-4 py-2 border border-drac-comment text-drac-comment font-medium text-sm rounded-md
+      transition-colors duration-200 hover:border-drac-purple hover:text-drac-purple hover:bg-drac-purple/5;
   }
 
+  /* ── Difficulty badges ──────────────────────────────────── */
   .difficulty-easy {
-    @apply text-lc-green-400 bg-lc-green-400/10 border border-lc-green-400/20;
+    @apply text-drac-green bg-drac-green/10 border border-drac-green/25;
   }
 
   .difficulty-medium {
-    @apply text-lc-yellow-400 bg-lc-yellow-400/10 border border-lc-yellow-400/20;
+    @apply text-drac-orange bg-drac-orange/10 border border-drac-orange/25;
   }
 
   .difficulty-hard {
-    @apply text-lc-red-400 bg-lc-red-400/10 border border-lc-red-400/20;
+    @apply text-drac-red bg-drac-red/10 border border-drac-red/25;
   }
 
+  /* ── Input ──────────────────────────────────────────────── */
   .input-field {
-    @apply w-full px-5 py-3.5 bg-lc-dark-700/80 border border-white/10 rounded-xl text-gray-100
-    placeholder-gray-500 focus:outline-none focus:border-lc-purple-500/50 focus:ring-2 focus:ring-lc-purple-500/20
-    transition-all duration-300;
+    @apply w-full px-4 py-3 bg-drac-bg border border-drac-comment/30 rounded-md text-drac-fg
+      placeholder-drac-comment focus:outline-none focus:border-drac-purple focus:ring-1 focus:ring-drac-purple/30
+      transition-colors duration-200;
   }
 
+  /* ── Tags ───────────────────────────────────────────────── */
   .tag-badge {
-    @apply px-2.5 py-0.5 text-xs font-medium rounded-full bg-lc-dark-500/80 text-gray-300 border border-white/5;
+    @apply px-2 py-0.5 text-xs font-medium rounded bg-drac-surface text-drac-comment border border-drac-comment/15;
   }
 }
 
 @layer utilities {
-  .text-gradient {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-lc-purple-400 via-lc-blue-400 to-lc-green-400;
-  }
-
-  .mesh-gradient {
-    background:
-      radial-gradient(ellipse at 20% 50%, rgba(139, 92, 246, 0.08) 0%, transparent 50%),
-      radial-gradient(ellipse at 80% 20%, rgba(91, 138, 240, 0.06) 0%, transparent 50%),
-      radial-gradient(ellipse at 40% 80%, rgba(44, 187, 93, 0.04) 0%, transparent 50%);
+  .text-accent {
+    @apply text-drac-purple;
   }
 }
